@@ -4,8 +4,8 @@
 
 import * as dotenv from "dotenv";
 import express from "express";
-import cors from "cors";
-import helmet from "helmet";
+//import cors from "cors";
+//import helmet from "helmet";
 
 dotenv.config();
 
@@ -25,8 +25,8 @@ const app = express();
  *  App Configuration
  */
 
-app.use(helmet());
-app.use(cors());
+//app.use(helmet());
+//app.use(cors());
 app.use(express.json());
 
 /**
