@@ -16,3 +16,16 @@ jobs:
       - name: Build Image
         run: |
           docker build -t digital-cv .
+      - name: Start image
+        run: |
+          docker-compose up -d
+          container_status="starting"
+          while [[ "${status}" == "starting" ]]; do
+            container_status="$(docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q digital-cv))"
+          done
+          docker-compose down
+          if [[ "${container_status}" != "healthy" ]]; then
+            echo "Container is not in 'healthy' state"
+            echo "container_status='${container_status}'"
+            exit 1
+          fi

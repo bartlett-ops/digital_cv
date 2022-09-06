@@ -12,6 +12,7 @@ RUN npm run lint
 
 
 FROM node:16-alpine
+RUN apk add curl
 RUN npm install pm2 -g
 WORKDIR /opt/digital-cv
 
@@ -21,5 +22,6 @@ COPY --from=builder /opt/digital-cv/dist .
 
 EXPOSE 8080
 ENV PORT=8080
+HEALTHCHECK --interval=3s --timeout=3s CMD ["curl", "-f", "http://localhost:8080"]
 
 CMD ["pm2-runtime","index.js"]
