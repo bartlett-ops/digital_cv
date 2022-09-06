@@ -22,6 +22,6 @@ COPY --from=builder /opt/digital-cv/dist .
 
 EXPOSE 8080
 ENV PORT=8080
-HEALTHCHECK --interval=3s --timeout=3s CMD ["curl", "--fail", "--silent", "http://localhost:8080"]
+HEALTHCHECK --interval=3s --timeout=3s CMD ["curl", "--fail", "http://localhost:8080"]
 
 CMD ["pm2-runtime","index.js"]
