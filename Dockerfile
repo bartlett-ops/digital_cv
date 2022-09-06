@@ -6,6 +6,7 @@ COPY tsconfig.json ./
 COPY src ./src
 RUN npm install
 RUN npm run build
+RUN npm run lint
 
 
 FROM node:16-alpine
