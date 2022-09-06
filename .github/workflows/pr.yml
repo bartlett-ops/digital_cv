@@ -24,7 +24,7 @@ jobs:
           container_status="starting"
           while [[ "${container_status}" == "starting" ]]; do
             container_state="$(docker inspect --format='{{json .State}}' "${container_id}")"
-            container_status="$(jq '.Health.Status' <<< "${container_state}")"
+            container_status="$(jq -r '.Health.Status' <<< "${container_state}")"
           done
           docker-compose down
           if [[ "${container_status}" != "healthy" ]]; then
