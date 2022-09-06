@@ -18,9 +18,10 @@ jobs:
           docker build -t digital-cv .
       - name: Start image
         run: |
+          set -eu
           docker-compose up -d
           container_status="starting"
-          while [[ "${status}" == "starting" ]]; do
+          while [[ "${container_status}" == "starting" ]]; do
             container_status="$(docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q digital-cv))"
           done
           docker-compose down
