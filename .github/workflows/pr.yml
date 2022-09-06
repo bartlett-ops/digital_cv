@@ -20,13 +20,16 @@ jobs:
         run: |
           set -eu
           docker-compose up -d
+          container_id=$(docker-compose ps -q digital-cv)
           container_status="starting"
           while [[ "${container_status}" == "starting" ]]; do
-            container_status="$(docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q digital-cv))"
+            container_state="$(docker inspect --format='{{json .State}}' "${container_id}")"
+            container_status="$(jq '.Health.Status' <<< "${container_state}")"
           done
           docker-compose down
           if [[ "${container_status}" != "healthy" ]]; then
             echo "Container is not in 'healthy' state"
             echo "container_status='${container_status}'"
+            jq '.' <<< "${container_state}"
             exit 1
           fi
