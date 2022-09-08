@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "us_east_1"
+  alias   = "us_east_1"
   region  = "us-east-1"
   profile = "bartlett"
 }
