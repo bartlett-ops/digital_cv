@@ -1,0 +1,13 @@
+name: Terraform Lint
+on: [push]
+jobs:
+  Lint-Terraform:
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform:1.2.8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Lint
+        run: terraform fmt -check -recursive /__w/digital-cv/digital-cv/terraform
+
