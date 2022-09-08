@@ -1,0 +1,35 @@
+name: Run CI for PR
+on: 
+  push:
+    branches-ignore: 
+      - master
+jobs:
+  Build-Image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build Image
+        run: |
+          docker build -t digital-cv .
+      - name: Start image
+        run: |
+          set -eu
+          docker-compose up -d
+          container_id=$(docker-compose ps -q digital-cv)
+          container_status="starting"
+          while [[ "${container_status}" == "starting" ]]; do
+            container_state="$(docker inspect --format='{{json .State}}' "${container_id}")"
+            container_status="$(jq -r '.Health.Status' <<< "${container_state}")"
+          done
+          docker-compose down
+          if [[ "${container_status}" != "healthy" ]]; then
+            echo "Container is not in 'healthy' state"
+            echo "container_status='${container_status}'"
+            jq '.' <<< "${container_state}"
+            exit 1
+          fi
