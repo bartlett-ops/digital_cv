@@ -15,12 +15,12 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: Build Image
         run: |
-          docker build -t digital-cv .
+          docker build -t digital_cv .
       - name: Start image
         run: |
           set -eu
           docker-compose up -d
-          container_id=$(docker-compose ps -q digital-cv)
+          container_id=$(docker-compose ps -q digital_cv)
           container_status="starting"
           while [[ "${container_status}" == "starting" ]]; do
             container_state="$(docker inspect --format='{{json .State}}' "${container_id}")"

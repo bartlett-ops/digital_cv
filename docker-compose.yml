@@ -1,7 +1,7 @@
 version: "2.2"
 services:
-  digital-cv:
-    image: digital-cv:latest
+  digital_cv:
+    image: digital_cv:latest
     build: .
     ports: 
       - "8080:8080"

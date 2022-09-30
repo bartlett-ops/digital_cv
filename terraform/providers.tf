@@ -8,3 +8,7 @@ provider "aws" {
   region  = "us-east-1"
   profile = "bartlett"
 }
+
+provider "github" {
+  owner = "bartlett"
+}
