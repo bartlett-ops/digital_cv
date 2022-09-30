@@ -16,4 +16,4 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: Build and push image
         run: |
-          docker build -t ${{secrets.DOCKER_REGISTRY}}:digital_cv:${{github.sha}} .
+          docker build -t ${{secrets.DOCKER_REGISTRY}}/digital_cv:${{github.sha}} .
