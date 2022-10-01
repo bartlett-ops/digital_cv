@@ -26,6 +26,6 @@ jobs:
           registry-type: public
       - name: Build and push image
         run: |
-          image_name="${{secrets.DOCKER_REGISTRY}}/digital_cv:${{github.sha}}"
+          image_name="${{secrets.DOCKER_REGISTRY}}:${{github.sha}}"
           docker build -t "${image_name}" .
           docker push "${image_name}"
