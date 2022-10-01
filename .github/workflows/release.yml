@@ -3,7 +3,6 @@ on:
   push:
     branches: 
       - master
-      - release_workflow
 jobs:
   Build-And-Push-Image:
     runs-on: ubuntu-latest
