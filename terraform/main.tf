@@ -8,15 +8,15 @@ module "ecr" {
 }
 
 module "aws_iam_users" {
-  source = "./modules/aws_iam_users"
-  name_prefix = local.stack_name
+  source               = "./modules/aws_iam_users"
+  name_prefix          = local.stack_name
   aws_iam_user_configs = local.aws_iam_user_configs
 }
 
 locals {
-  iam_credentials = merge([ for key,value in module.aws_iam_users.credentials:
+  iam_credentials = merge([for key, value in module.aws_iam_users.credentials :
     {
-      "user_${key}__AWS_ACCESS_KEY_ID" = value.aws_access_key_id,
+      "user_${key}__AWS_ACCESS_KEY_ID"     = value.aws_access_key_id,
       "user_${key}__AWS_SECRET_ACCESS_KEY" = value.aws_secret_access_key
     }
   ]...)
@@ -31,9 +31,9 @@ locals {
 
 
 resource "github_actions_secret" "secrets" {
-  for_each = nonsensitive(sensitive(local.actions_secrets))
-  repository = local.github_repository_name
-  secret_name = each.key
+  for_each        = nonsensitive(sensitive(local.actions_secrets))
+  repository      = local.github_repository_name
+  secret_name     = each.key
   plaintext_value = each.value
 }
 

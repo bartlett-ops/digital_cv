@@ -17,7 +17,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: eu-west-1
+          aws-region: us-east-1
           aws-access-key-id: ${{ secrets.USER_GITHUB_ACTIONS__AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.USER_GITHUB_ACTIONS__AWS_SECRET_ACCESS_KEY }}
       - name: Login to Amazon ECR Public

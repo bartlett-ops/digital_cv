@@ -17,7 +17,7 @@ data "aws_iam_policy_document" "github_actions" {
       "ecr-public:GetAuthorizationToken",
       "sts:GetServiceBearerToken",
     ]
-    resources = [ "*" ]
+    resources = ["*"]
   }
 }
 
