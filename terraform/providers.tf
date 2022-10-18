@@ -10,5 +10,5 @@ provider "aws" {
 }
 
 provider "github" {
-  owner = "bartlett"
+  owner = "bartlettt"
 }

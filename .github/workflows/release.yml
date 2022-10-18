@@ -1,0 +1,30 @@
+name: Run CI for Release
+on: 
+  push:
+    branches: 
+      - master
+jobs:
+  Build-And-Push-Image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.USER_GITHUB_ACTIONS__AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.USER_GITHUB_ACTIONS__AWS_SECRET_ACCESS_KEY }}
+      - name: Login to Amazon ECR Public
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: public
+      - name: Build and push image
+        run: |
+          image_name="${{secrets.DOCKER_REGISTRY}}:${{github.sha}}"
+          docker build -t "${image_name}" .
+          docker push "${image_name}"
