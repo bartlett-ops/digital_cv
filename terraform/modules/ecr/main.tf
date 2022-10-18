@@ -8,9 +8,3 @@ resource "aws_ecrpublic_repository" "repo" {
     operating_systems = ["Linux"]
   }
 }
-
-#resource "github_actions_secret" "ecr_url" {
-#  repository      = var.github_repository_name
-#  secret_name     = "DOCKER_REGISTRY"
-#  plaintext_value = aws_ecrpublic_repository.repo.repository_uri
-#}
